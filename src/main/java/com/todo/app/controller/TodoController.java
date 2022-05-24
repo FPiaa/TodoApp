@@ -1,12 +1,16 @@
 package com.todo.app.controller;
 
+import com.todo.app.config.SwaggerConfig;
 import com.todo.app.domain.Message;
 import com.todo.app.domain.Todo;
 import com.todo.app.exceptions.BadRequestException;
 import com.todo.app.exceptions.ResourceAlreadyExistsException;
 import com.todo.app.exceptions.ResourceNotFoundException;
 import com.todo.app.service.TodoService;
-import org.apache.coyote.Response;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -30,6 +33,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 
+@Api(tags = SwaggerConfig.todoControllerTag)
 @RestController
 @RequestMapping("/api")
 public class TodoController {
@@ -38,12 +42,25 @@ public class TodoController {
   @Autowired
   private TodoService todoService;
 
+  @ApiOperation(value = "List all TODOs",
+      tags = SwaggerConfig.todoControllerTag,
+      produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation", response = List.class),
+  })
   @GetMapping(value = "/todos", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Todo>> findAll() {
     return ResponseEntity.ok(todoService.findAll());
   }
 
 
+  @ApiOperation(value = "List a specific TODO with and ID",
+      tags = SwaggerConfig.todoControllerTag,
+  produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation", response = Todo.class),
+      @ApiResponse(code = 404, message = "TODO not found")
+  })
   @GetMapping(value = "/todo/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Todo> findTodoById(@PathVariable long todoId) {
     try {
@@ -54,6 +71,14 @@ public class TodoController {
     }
   }
 
+  @ApiOperation(value = "Create a new TODO",
+      tags = SwaggerConfig.todoControllerTag,
+      produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation", response = Todo.class),
+      @ApiResponse(code = 400, message = "TODO message cant be empty"),
+      @ApiResponse(code = 409, message = "TODO with this ID already exists")
+  })
   @PostMapping("/todo")
   public ResponseEntity<Todo> addTodo(@Valid @RequestBody Todo todo) throws URISyntaxException {
     try {
@@ -71,6 +96,14 @@ public class TodoController {
     }
   }
 
+  @ApiOperation(value = "Update an existing TODO",
+      tags = SwaggerConfig.todoControllerTag,
+      produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation"),
+      @ApiResponse(code = 400, message = "TODO message cant be empty"),
+      @ApiResponse(code = 404, message = "TODO not found")
+  })
   @PutMapping("/todo/{todoId}")
   public ResponseEntity<Void> updateTodo(@Valid @RequestBody Todo todo, @PathVariable long todoId) {
     try {
@@ -87,6 +120,14 @@ public class TodoController {
     }
   }
 
+  @ApiOperation(value = "Update an existing TODO message",
+      tags = SwaggerConfig.todoControllerTag,
+      produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation"),
+      @ApiResponse(code = 400, message = "TODO message cant be empty"),
+      @ApiResponse(code = 404, message = "TODO not found")
+  })
   @PatchMapping("/todo/{todoId}")
   public ResponseEntity<Void> updateTodoMessage(@PathVariable long todoId, @RequestBody Message message) {
     try {
@@ -101,6 +142,13 @@ public class TodoController {
     }
   }
 
+  @ApiOperation(value = "Delete an existing TODO with ID",
+      tags = SwaggerConfig.todoControllerTag,
+      produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation"),
+      @ApiResponse(code = 404, message = "TODO not found")
+  })
   @DeleteMapping("/todo/{todoId}")
   public ResponseEntity<Void> deleteTodo(@PathVariable long todoId) {
     try{
