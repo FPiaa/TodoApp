@@ -102,7 +102,7 @@ public class TodoServiceUnitTest {
 
   @Test
   public void test_updateTodo_validTodo_ShouldBeValid() throws Exception {
-    when(todoRepository.existsById(any(Long.class))).thenReturn(true);
+    when(todoRepository.findById(any(Long.class))).thenReturn(Optional.of(createValidTodo(1L)));
 
     var todo = createValidTodo(1L);
     todoService.updateTodo(todo);
@@ -110,7 +110,7 @@ public class TodoServiceUnitTest {
 
   @Test
   public void test_updateTodo_emptyMessage_ShouldThrowBadRequestException() {
-    when(todoRepository.existsById(any(Long.class))).thenReturn(true);
+    when(todoRepository.findById(any(Long.class))).thenReturn(Optional.of(createValidTodo(1L)));
 
     var todo = createValidTodo(1L, "");
     BadRequestException exception = assertThrows(BadRequestException.class,
@@ -124,7 +124,7 @@ public class TodoServiceUnitTest {
 
   @Test
   public void test_updateTodo_TodoDoesNotExist_ShouldThrowResourceNotFoundException() {
-    when(todoRepository.existsById(any(Long.class))).thenReturn(false);
+    when(todoRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
     var todo = createValidTodo(1L);
     ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,

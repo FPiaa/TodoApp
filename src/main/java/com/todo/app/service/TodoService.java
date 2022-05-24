@@ -49,7 +49,8 @@ public class TodoService {
 
 
   public void updateTodo(Todo todo) throws ResourceNotFoundException, BadRequestException {
-    if(!todoRepository.existsById(todo.getId())) {
+    var currentTodo = todoRepository.findById(todo.getId());
+    if(currentTodo.isEmpty()) {
       throw new ResourceNotFoundException("Cannot find TODO with ID: " + todo.getId());
     }
 
@@ -57,6 +58,7 @@ public class TodoService {
       throw new BadRequestException("TODO message cannot be empty");
     }
 
+    todo.setCreatedAt(currentTodo.get().getCreatedAt());
     todoRepository.save(todo);
 
   }
