@@ -40,7 +40,7 @@ public class TodoService {
       throw new BadRequestException("TODO message cannot be empty");
     }
 
-    if(todoRepository.existsById(todo.getId())) {
+    if(todo.getId() != null && todoRepository.existsById(todo.getId())) {
       throw new ResourceAlreadyExistsException("TODO with ID: " + todo.getId() + " already exists");
     }
 

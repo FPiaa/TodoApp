@@ -40,7 +40,7 @@ public class TodoServiceUnitTest {
     Todo todo = createValidTodo(1L);
     Todo newTodo = todoService.create(todo);
 
-    assertThat(newTodo.getCreatedAt()).isNotNull();
+    assertThat(newTodo.getMessage()).isNotNull();
   }
 
   @Test

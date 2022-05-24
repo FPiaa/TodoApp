@@ -10,9 +10,6 @@ public class TodoUtils {
       var todo = new Todo();
       todo.setId(id);
       todo.setMessage("Todo message");
-      todo.setCreatedAt(Timestamp.from(Instant.now()));
-      todo.setUpdatedAt(Timestamp.from(Instant.now()));
-      todo.setDone(false);
       return todo;
   }
 
@@ -20,9 +17,12 @@ public class TodoUtils {
     var todo = new Todo();
     todo.setId(id);
     todo.setMessage(message);
-    todo.setCreatedAt(Timestamp.from(Instant.now()));
-    todo.setUpdatedAt(Timestamp.from(Instant.now()));
-    todo.setDone(false);
+    return todo;
+  }
+
+  public static Todo createValidTodo(String message) {
+    var todo = new Todo();
+    todo.setMessage(message);
     return todo;
   }
 }
