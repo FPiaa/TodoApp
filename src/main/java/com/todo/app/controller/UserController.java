@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -39,14 +40,9 @@ public class UserController {
     }
   }
 
-  @GetMapping("/{userId}/todos")
-  public ResponseEntity<User> findTodosById(@PathVariable long userId) {
-    try {
-      return ResponseEntity.ok(userService.findById(userId));
-    } catch (ResourceNotFoundException ex) {
-      logger.error(ex.getMessage());
-      return ResponseEntity.notFound().build();
-    }
+  @GetMapping("/todos/{userId}")
+  public ResponseEntity<List<User>> findAllTodos(@PathVariable long userId) throws URISyntaxException{
+    return ResponseEntity.status(HttpStatus.PERMANENT_REDIRECT).location(new URI("/api/todos/"+userId)).build();
   }
 
   @PostMapping("")
