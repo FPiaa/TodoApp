@@ -53,6 +53,12 @@ public class TodoController {
     return ResponseEntity.ok(todoService.findAll());
   }
 
+  @ApiOperation(value = "List all TODOs from user with userID",
+      tags = SwaggerConfig.todoControllerTag,
+      produces = "Todo")
+  @ApiResponses({
+      @ApiResponse(code = 200, message = "Successful operation", response = List.class),
+  })
   @GetMapping(value = "/todos/{userId}")
   public ResponseEntity<List<Todo>> findAllByUserId(@PathVariable long userId) {
     return ResponseEntity.ok(todoService.findAllByUserId(userId));
