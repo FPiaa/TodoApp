@@ -1,9 +1,6 @@
 package com.todo.app.utils;
 
-import com.todo.app.domain.Todo;
-
-import java.sql.Timestamp;
-import java.time.Instant;
+import com.todo.app.entity.Todo;
 
 public class TodoUtils {
   public static Todo createValidTodo(Long id) {

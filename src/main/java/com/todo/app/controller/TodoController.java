@@ -1,8 +1,8 @@
 package com.todo.app.controller;
 
 import com.todo.app.config.SwaggerConfig;
-import com.todo.app.domain.Message;
-import com.todo.app.domain.Todo;
+import com.todo.app.entity.Message;
+import com.todo.app.entity.Todo;
 import com.todo.app.exceptions.BadRequestException;
 import com.todo.app.exceptions.ResourceAlreadyExistsException;
 import com.todo.app.exceptions.ResourceNotFoundException;

@@ -1,4 +1,4 @@
-package com.todo.app.domain;
+package com.todo.app.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -62,4 +64,8 @@ public class Todo implements Serializable {
   )
   @UpdateTimestamp
   private Timestamp updatedAt;
+
+  @ManyToOne
+  @JoinColumn(name = "owner_id")
+  private User owner;
 }

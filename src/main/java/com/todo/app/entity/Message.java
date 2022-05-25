@@ -1,4 +1,4 @@
-package com.todo.app.domain;
+package com.todo.app.entity;
 
 import lombok.Getter;
 import lombok.Setter;

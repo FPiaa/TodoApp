@@ -1,6 +1,6 @@
 package com.todo.app.integrationtest;
 
-import com.todo.app.domain.Todo;
+import com.todo.app.entity.Todo;
 import com.todo.app.exceptions.ResourceNotFoundException;
 import com.todo.app.service.TodoService;
 import org.junit.jupiter.api.Test;

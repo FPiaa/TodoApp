@@ -1,6 +1,6 @@
 package com.todo.app.service;
 
-import com.todo.app.domain.Todo;
+import com.todo.app.entity.Todo;
 import com.todo.app.exceptions.BadRequestException;
 import com.todo.app.exceptions.ResourceAlreadyExistsException;
 import com.todo.app.exceptions.ResourceNotFoundException;
