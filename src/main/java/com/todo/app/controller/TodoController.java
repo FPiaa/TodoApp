@@ -53,6 +53,10 @@ public class TodoController {
     return ResponseEntity.ok(todoService.findAll());
   }
 
+  @GetMapping(value = "/todos/{userId}")
+  public ResponseEntity<List<Todo>> findAllByUserId(@PathVariable long userId) {
+    return ResponseEntity.ok(todoService.findAllByUserId(userId));
+  }
 
   @ApiOperation(value = "List a specific TODO with and ID",
       tags = SwaggerConfig.todoControllerTag,
@@ -83,6 +87,7 @@ public class TodoController {
   public ResponseEntity<Todo> addTodo(@Valid @RequestBody Todo todo) throws URISyntaxException {
     try {
       var createdTodo = todoService.create(todo);
+      System.out.println(createdTodo.getOwner().getName());
       return ResponseEntity
           .created(new URI("/api/todo/" + createdTodo.getId()))
           .body(createdTodo);

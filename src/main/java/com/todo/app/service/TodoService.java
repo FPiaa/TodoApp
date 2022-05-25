@@ -1,12 +1,15 @@
 package com.todo.app.service;
 
 import com.todo.app.entity.Todo;
+import com.todo.app.entity.User;
 import com.todo.app.exceptions.BadRequestException;
 import com.todo.app.exceptions.ResourceAlreadyExistsException;
 import com.todo.app.exceptions.ResourceNotFoundException;
 import com.todo.app.repository.TodoRepository;
+import com.todo.app.specification.TodoSpecification;
 import com.todo.app.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,6 +36,17 @@ public class TodoService {
     List<Todo> todo = new ArrayList<>();
     todoRepository.findAll().forEach(todo::add);
     return todo;
+  }
+
+  public List<Todo> findAllByUserId(Long userId) {
+    User owner = new User();
+    owner.setId(userId);
+
+    Todo filter = new Todo();
+    filter.setOwner(owner);
+
+    Specification<Todo> spec = new TodoSpecification(filter);
+    return todoRepository.findAll(spec);
   }
 
   public Todo create(Todo todo) throws BadRequestException, ResourceAlreadyExistsException{
