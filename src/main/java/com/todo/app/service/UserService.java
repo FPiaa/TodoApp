@@ -22,7 +22,7 @@ public class UserService {
     var user = userRepository.findById(id);
 
     if(user.isEmpty()) {
-      throw new ResourceNotFoundException("Cannot find TODO with ID: " + id);
+      throw new ResourceNotFoundException("Cannot find USER with ID:" + id);
     }
 
     return user.get();
@@ -37,11 +37,11 @@ public class UserService {
 
   public User create(User user) throws BadRequestException, ResourceAlreadyExistsException{
     if(StringUtils.isEmpty(user.getName())) {
-      throw new BadRequestException("TODO message cannot be empty");
+      throw new BadRequestException("User name cannot be empty");
     }
 
     if(user.getId() != null && userRepository.existsById(user.getId())) {
-      throw new ResourceAlreadyExistsException("TODO with ID: " + user.getId() + " already exists");
+      throw new ResourceAlreadyExistsException("USER with ID:" + user.getId() + " already exists");
     }
 
     return userRepository.save(user);
@@ -51,11 +51,11 @@ public class UserService {
   public void updateUser(User user) throws ResourceNotFoundException, BadRequestException {
     var currentUser = userRepository.findById(user.getId());
     if(currentUser.isEmpty()) {
-      throw new ResourceNotFoundException("Cannot find TODO with ID: " + user.getId());
+      throw new ResourceNotFoundException("Cannot find USER with ID:" + user.getId());
     }
 
     if(StringUtils.isEmpty(user.getName())) {
-      throw new BadRequestException("TODO message cannot be empty");
+      throw new BadRequestException("User name cannot be empty");
     }
 
     userRepository.save(user);
@@ -65,7 +65,7 @@ public class UserService {
   public void updateName(Long id, String name) throws ResourceNotFoundException, BadRequestException {
     var user = findById(id);
     if(StringUtils.isEmpty(name)) {
-      throw new BadRequestException("TODO message cannot be empty");
+      throw new BadRequestException("User name cannot be empty");
     }
     user.setName(name);
     userRepository.save(user);
@@ -73,7 +73,7 @@ public class UserService {
 
   public void deleteById(Long id) throws ResourceNotFoundException {
     if(!userRepository.existsById(id)) {
-      throw new ResourceNotFoundException("Cannot find TODO with ID: " + id);
+      throw new ResourceNotFoundException("Cannot find USER with ID:" + id);
     }
 
     userRepository.deleteById(id);
