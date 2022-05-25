@@ -87,7 +87,6 @@ public class TodoController {
   public ResponseEntity<Todo> addTodo(@Valid @RequestBody Todo todo) throws URISyntaxException {
     try {
       var createdTodo = todoService.create(todo);
-      System.out.println(createdTodo.getOwner().getName());
       return ResponseEntity
           .created(new URI("/api/todo/" + createdTodo.getId()))
           .body(createdTodo);
